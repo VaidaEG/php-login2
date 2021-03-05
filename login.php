@@ -1,7 +1,22 @@
 <?php
 require __DIR__ . '/bootstrap.php';
 
-// POST metodo scenarijus
+// LOGOUT scenarijus
+if(isset($_GET['logout'])) {
+    //keli budai
+    // $_SESSION['login'] = 0;
+    // unset($_SESSION['user']);
+    // kitas budas
+    session_destroy();
+    header('Location: ' . URL . 'login.php');
+    die;
+}
+// jau prisijungusio vartotojo scenarijus
+if (isset($_SESSION['login']) && 1 == $_SESSION['login']) {
+    header('Location: ' . URL . 'private.php');
+    die;
+}
+// POST metodo scenarijus LOGIN
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $users = file_get_contents(__DIR__ . '/users.json');
     $users = json_decode($users, 1);
@@ -24,6 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     header('Location: ' . URL . 'login.php');
     die;
 }
+// Prisijungimo formos rodymo scenarijus
 ?>
 <!DOCTYPE html>
 <html lang="en">
